@@ -1,17 +1,13 @@
 <?php
-session_start(); // Démarrer la session
+session_start(); 
 
-// Vérifier si l'utilisateur est connecté en vérifiant la présence de l'identifiant dans la session
 if (!isset($_SESSION['identifiant'])) {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    header("Location: connexion.html");
-    exit; // Arrêter l'exécution du script après la redirection
+    header("Location: ../vue/connexion.php");
+    exit; 
 }
 
-// Récupérer l'identifiant de l'utilisateur depuis la session
 $identifiant = $_SESSION['identifiant'];
 
-// Connexion à la base de données
 $serveur = "localhost";
 $utilisateur = "root";
 $mot_de_passe = "";
@@ -19,20 +15,15 @@ $base_de_donnees = "MMA";
 
 $connexion = mysqli_connect($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
 
-// Vérifier la connexion
 if (!$connexion) {
     die("La connexion à la base de données a échoué : " . mysqli_connect_error());
 }
 
-// Requête SQL pour récupérer les informations de l'utilisateur
 $requete = "SELECT nom_utilisateur, adressMail FROM utilisateurs WHERE nom_utilisateur = '$identifiant'";
 
-// Exécuter la requête
 $resultat = mysqli_query($connexion, $requete);
 
-// Vérifier s'il y a des résultats
 if (mysqli_num_rows($resultat) == 1) {
-    // Récupérer les informations de l'utilisateur
     $row = mysqli_fetch_assoc($resultat);
     $nom_utilisateur = $row['nom_utilisateur'];
     $adresse_email = $row['adressMail'];
@@ -40,10 +31,8 @@ if (mysqli_num_rows($resultat) == 1) {
     echo "Erreur : Utilisateur non trouvé.";
 }
 
-// Libérer le résultat de la requête
 mysqli_free_result($resultat);
 
-// Fermer la connexion à la base de données
 mysqli_close($connexion);
 ?>
 
