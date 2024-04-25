@@ -10,6 +10,6 @@ if (isset($_SESSION['identifiant'])) {
     session_destroy();
 
     // Rediriger vers la page d'accueil ou une autre page après la déconnexion
-    header("Location: Acceuil.php");
+    header("Location: ../vue/Acceuil.php");
     exit; // Arrêter l'exécution du script après la redirection
 }
